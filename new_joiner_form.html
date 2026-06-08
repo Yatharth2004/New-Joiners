@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>New Joiner Registration</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    min-height:100vh;
+    background:linear-gradient(145deg,#0d1b2a 0%,#1b2a4a 55%,#0d1b2a 100%);
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    padding:20px 14px 50px;color:#fff;
+  }
+  .header{
+    max-width:660px;margin:0 auto 22px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:20px;padding:26px 24px;text-align:center;
+  }
+  .header-icon{font-size:40px;margin-bottom:8px}
+  .header h1{font-size:22px;font-weight:800;letter-spacing:-0.4px}
+  .header p{font-size:13px;color:rgba(255,255,255,0.4);margin-top:6px}
+  .card{
+    max-width:660px;margin:0 auto;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:20px;padding:26px 20px;
+  }
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+  .full{grid-column:1/-1}
+  .sec{
+    grid-column:1/-1;font-size:10.5px;font-weight:700;
+    color:rgba(139,92,246,0.85);text-transform:uppercase;letter-spacing:1px;
+    padding:10px 0 6px;border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .field label{
+    display:block;font-size:11px;font-weight:700;
+    color:rgba(255,255,255,0.5);text-transform:uppercase;
+    letter-spacing:0.6px;margin-bottom:6px;
+  }
+  .field label span{color:#f87171;margin-left:2px}
+  .field input,.field textarea{
+    width:100%;background:rgba(255,255,255,0.07);
+    border:1.5px solid rgba(255,255,255,0.11);
+    border-radius:10px;padding:11px 13px;
+    color:#fff;font-size:14px;font-family:inherit;
+    outline:none;transition:border-color 0.2s;-webkit-appearance:none;
+  }
+  .field input:focus,.field textarea:focus{border-color:rgba(139,92,246,0.65)}
+  .field input[type=date]{color-scheme:dark}
+  .field textarea{resize:none;height:70px}
+  .field .err{font-size:11px;color:#f87171;margin-top:4px;display:none}
+  .field.invalid input,.field.invalid textarea{border-color:#f87171}
+  .field.invalid .err{display:block}
+  input::placeholder,textarea::placeholder{color:rgba(255,255,255,0.22)}
+  .btn{
+    width:100%;margin-top:22px;padding:14px;
+    background:linear-gradient(135deg,#7c3aed,#4f46e5);
+    border:none;border-radius:12px;color:#fff;
+    font-size:15px;font-weight:700;cursor:pointer;
+    box-shadow:0 6px 24px rgba(124,58,237,0.4);
+    transition:opacity 0.2s,transform 0.1s;font-family:inherit;
+  }
+  .btn:disabled{opacity:0.6;cursor:not-allowed}
+  .btn:not(:disabled):active{transform:scale(0.98)}
+
+  /* Success screen */
+  .success-screen{
+    max-width:660px;margin:40px auto;text-align:center;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(16,185,129,0.3);
+    border-radius:20px;padding:50px 24px;display:none;
+  }
+  .success-screen .icon{font-size:56px;margin-bottom:16px}
+  .success-screen h2{font-size:22px;font-weight:800;color:#10b981;margin-bottom:8px}
+  .success-screen p{color:rgba(255,255,255,0.5);font-size:14px;line-height:1.6}
+
+  /* Loading spinner */
+  .spinner{
+    display:inline-block;width:18px;height:18px;
+    border:2px solid rgba(255,255,255,0.3);
+    border-top-color:#fff;border-radius:50%;
+    animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:8px;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  @media(max-width:480px){
+    .grid{grid-template-columns:1fr}
+    .full,.sec{grid-column:1}
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">🎓</div>
+  <h1>New Joiner Registration</h1>
+  <p>Please fill in all details accurately</p>
+</div>
+
+<!-- FORM -->
+<div class="card" id="formCard">
+  <div class="grid">
+
+    <div class="sec">👤 Personal Details</div>
+
+    <div class="field full" id="f-name">
+      <label>Full Name <span>*</span></label>
+      <input type="text" id="name" placeholder="Enter your full name"/>
+      <div class="err">Name is required</div>
+    </div>
+
+    <div class="field full" id="f-college">
+      <label>College / Institution <span>*</span></label>
+      <input type="text" id="college" placeholder="Enter your college name"/>
+      <div class="err">College is required</div>
+    </div>
+
+    <div class="field full" id="f-email">
+      <label>Email Address <span>*</span></label>
+      <input type="email" id="email" placeholder="yourname@email.com"/>
+      <div class="err">Enter a valid email</div>
+    </div>
+
+    <div class="field" id="f-mobile">
+      <label>Mobile No. (Trainee) <span>*</span></label>
+      <input type="tel" id="mobile" placeholder="10-digit number"/>
+      <div class="err">Enter valid mobile no.</div>
+    </div>
+
+    <div class="field" id="f-doj">
+      <label>Date of Joining <span>*</span></label>
+      <input type="date" id="doj"/>
+      <div class="err">Select joining date</div>
+    </div>
+
+    <div class="field" id="f-birthday">
+      <label>Date of Birth <span>*</span></label>
+      <input type="date" id="birthday"/>
+      <div class="err">Select date of birth</div>
+    </div>
+
+    <div class="sec">👨‍👩‍👦 Family Details</div>
+
+    <div class="field" id="f-fatherName">
+      <label>Father's Name <span>*</span></label>
+      <input type="text" id="fatherName" placeholder="Father's full name"/>
+      <div class="err">Father's name is required</div>
+    </div>
+
+    <div class="field" id="f-fatherMobile">
+      <label>Father's Mobile Number <span>*</span></label>
+      <input type="tel" id="fatherMobile" placeholder="Father's mobile number"/>
+      <div class="err">Enter valid mobile no.</div>
+    </div>
+
+    <div class="field full" id="f-motherName">
+      <label>Mother's Name <span>*</span></label>
+      <input type="text" id="motherName" placeholder="Mother's full name"/>
+      <div class="err">Mother's name is required</div>
+    </div>
+
+    <div class="sec">🏠 Address Details</div>
+
+    <div class="field full" id="f-localAddress">
+      <label>Local / Current Address <span>*</span></label>
+      <textarea id="localAddress" placeholder="Current address where you're staying"></textarea>
+      <div class="err">Local address is required</div>
+    </div>
+
+    <div class="field full" id="f-permanentAddress">
+      <label>Permanent Home Address <span>*</span></label>
+      <textarea id="permanentAddress" placeholder="Permanent address from ID proof"></textarea>
+      <div class="err">Permanent address is required</div>
+    </div>
+
+  </div>
+  <button class="btn" id="submitBtn" onclick="submitForm()">Submit Registration</button>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-screen" id="successScreen">
+  <div class="icon">✅</div>
+  <h2>Registration Submitted!</h2>
+  <p>Your details have been recorded successfully.<br/>You don't need to do anything else.</p>
+</div>
+
+<script>
+  // ✏️ REPLACE THIS with your Google Apps Script Web App URL
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbw_T3VY9No8IkVwMUD-gEEOqKtDo9pQyZn1ztqja2Y5TvVAaT-qHaFTtscI1_SCBGrNEw/exec";
+
+  function v(id){ return document.getElementById(id).value.trim(); }
+  function setErr(id, show){
+    document.getElementById('f-'+id).classList.toggle('invalid', show);
+  }
+
+  async function submitForm(){
+    const d = {
+      name: v('name'), college: v('college'), email: v('email'),
+      mobile: v('mobile'), doj: v('doj'), birthday: v('birthday'),
+      fatherName: v('fatherName'), fatherMobile: v('fatherMobile'),
+      motherName: v('motherName'), localAddress: v('localAddress'),
+      permanentAddress: v('permanentAddress')
+    };
+
+    let ok = true;
+    ['name','college','motherName','localAddress','permanentAddress','fatherName'].forEach(k=>{
+      const pass = d[k] !== ''; setErr(k, !pass); if(!pass) ok=false;
+    });
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)){ setErr('email',true); ok=false; } else setErr('email',false);
+    if(!/^\+?[\d\s\-]{8,15}$/.test(d.mobile)){ setErr('mobile',true); ok=false; } else setErr('mobile',false);
+    if(!/^\+?[\d\s\-]{8,15}$/.test(d.fatherMobile)){ setErr('fatherMobile',true); ok=false; } else setErr('fatherMobile',false);
+    if(!d.doj){ setErr('doj',true); ok=false; } else setErr('doj',false);
+    if(!d.birthday){ setErr('birthday',true); ok=false; } else setErr('birthday',false);
+
+    if(!ok){ window.scrollTo({top:0,behavior:'smooth'}); return; }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Submitting...';
+
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(d)
+      });
+      document.getElementById('formCard').style.display = 'none';
+      document.getElementById('successScreen').style.display = 'block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    } catch(err) {
+      btn.disabled = false;
+      btn.innerHTML = 'Submit Registration';
+      alert('Something went wrong. Please check your internet and try again.');
+    }
+  }
+</script>
+</body>
+</html>
